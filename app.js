@@ -12,9 +12,9 @@ require('nunjucks-date').install(nunjucks);
 app.use(bodyParser.urlencoded());
 app.use(express.static('public'));
 
-app.use(require('express-bunyan-logger')({
-	name: 'jira-stats'
-}));
+// app.use(require('express-bunyan-logger')({
+// 	name: 'jira-stats'
+// }));
 
 app.get('/', (req, res) => {
 	res.render('index.html');

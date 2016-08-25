@@ -18,7 +18,6 @@ const client = opts => {
 	reqOpts.url = url + opts.url;
 	reqOpts.json = true;
 	_.set(reqOpts, 'headers.Authorization', `Basic ${process.env.BASIC_AUTH}`);
-	console.dir(reqOpts);
 	return request(reqOpts)
 		.then(response => {
 			console.log(`JIRA responded with status ${response.statusCode}`);
@@ -48,44 +47,6 @@ lib.getIssuesForSprintBoard = (boardId, sprintId) => {
 	return client({
 		url: `rest/agile/1.0/board/${boardId}/sprint/${sprintId}/issue`
 	});
-
-	// let filtered = _.filter(data.issues, (value) => {
-	// 	return _.get(value, 'fields.issuetype.subtask') != true;
-	// });
-	//
-	// let issueStatuses = _.map(filtered, (value, index, collection) => {
-	// 	return {
-	// 		key: value.key,
-	// 		estimate: _.get(value, 'fields.customfield_11310'),
-	// 		status: _.get(value, 'fields.status.name'),
-	// 		statusCategory: _.get(value, 'fields.status.statusCategory.name')
-	// 	}
-	// });
-	//
-	// let sorted = _.sortBy(issueStatuses, ['status']);
-	//
-	// log.info(sorted);
-	//
-	// log.info(_.map(_.groupBy(sorted, 'status'), (value, key) => {
-	// 	return {
-	// 		status: key,
-	// 		total: _.sumBy(value, 'estimate')
-	// 	}
-	// }));
-	//
-	// log.info(_.map(_.groupBy(sorted, 'statusCategory'), (value, key) => {
-	// 	return {
-	// 		statusCategory: key,
-	// 		issues: _.groupBy(value, 'status')
-	// 	}
-	// }));
-	//
-	// log.info(_.map(_.groupBy(sorted, 'statusCategory'), (value, key) => {
-	// 	return {
-	// 		status: key,
-	// 		total: _.sumBy(value, 'estimate')
-	// 	}
-	// }));
 };
 
 module.exports = lib;
