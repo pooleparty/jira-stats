@@ -42,10 +42,24 @@ const client = opts => {
 		});
 };
 
-lib.getIssuesForSprintBoard = (boardId, sprintId) => {
-	console.log(`getting issues for board ${boardId} and sprint ${sprintId}`);
+lib.getAllBoards = () => {
+	console.log('getting all boards');
 	return client({
-		url: `rest/agile/1.0/board/${boardId}/sprint/${sprintId}/issue`
+		url: 'rest/agile/1.0/board?limit=200'
+	});
+};
+
+lib.getSprintsForBoard = (boardId) => {
+	console.log(`getting boards ${boardId}`);
+	return client({
+		url: `rest/agile/1.0/board/${boardId}/sprint`
+	});
+};
+
+lib.getIssuesForSprint = (sprintId) => {
+	console.log(`getting issues for sprint ${sprintId}`);
+	return client({
+		url: `rest/agile/1.0/sprint/${sprintId}/issue`
 	});
 };
 

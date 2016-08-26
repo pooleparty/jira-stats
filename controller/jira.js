@@ -3,11 +3,38 @@ const bluebird = require('bluebird');
 const jiraService = require('../service/jira');
 const _ = require('lodash');
 
-router.get('/board/:boardId/sprint/:sprintId/issues', (req, res, next) => {
-	const {boardId, sprintId} = req.params;
-	jiraService.getIssuesForSprintBoard(boardId, sprintId).then(data => {
+router.get('/', (req, res, next) => {
+	res.render('jira/jira-index.html');
+});
+
+router.get('/board', (req, res, next) => {
+	jiraService.getAllBoards().then(data => {
 		if (!data) {
-			console.error(`Unable to get issues for sprint 472, board 191`);
+			console.error('Unable to get all boards');
+			return res.send(500);
+		}
+		console.dir(data);
+		return res.render('jira/board.html', {boards: data.values});
+	}).catch(next);
+});
+
+router.get('/board/:boardId', (req, res, next) => {
+	const {boardId} = req.params;
+	jiraService.getSprintsForBoard(boardId).then(data => {
+		if (!data) {
+			console.error(`Unable to get sprint for board ${boardId}`);
+			return res.send(500);
+		}
+		console.dir(data);
+		return res.render('jira/sprint.html', {sprints: data.values});
+	}).catch(next);
+});
+
+router.get('/sprint/:sprintId/issue', (req, res, next) => {
+	const {sprintId} = req.params;
+	jiraService.getIssuesForSprint(sprintId).then(data => {
+		if (!data) {
+			console.error(`Unable to get issues for sprint ${sprintId}`);
 			return res.send(500);
 		}
 
@@ -51,7 +78,7 @@ router.get('/board/:boardId/sprint/:sprintId/issues', (req, res, next) => {
 		// 	}
 		// });
 
-		return res.render('jira/jira-index.html', {issues: ret});
+		return res.render('jira/issue.html', {issues: ret});
 	}).catch(next);
 });
 

@@ -1,0 +1,14 @@
+{% extends "jira/decorator.html" %}
+
+{% block body %}
+<h1>Sprints</h1>
+<ul>
+	{% for sprint in sprints %}
+	<li>
+		<a href="/jira/sprint/{{sprint.id}}/issue">{{sprint.name}} - {{sprint.state}}</a>
+	</li>
+	{% else %}
+	<li>No sprints to display</li>
+	{% endfor %}
+</ul>
+{% endblock %}

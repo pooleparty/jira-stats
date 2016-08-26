@@ -1,25 +1,5 @@
 {% extends "jira/decorator.html" %}
 
 {% block body %}
-<h1>Issues</h1>
-<table border="1" cellpadding="5">
-	<tr>
-		<th>Key</th>
-		<th>Estimate</th>
-		<th>Status</th>
-		<th>Status Category</th>
-	</tr>
-	{% for issue in issues %}
-	<tr>
-		<td>{{ issue.key }}</td>
-		<td>{{ issue.estimate }}</td>
-		<td>{{ issue.status }}</td>
-		<td>{{ issue.statusCategory }}</td>
-	</tr>
-	{% else %}
-	<tr>
-		<td colspan="4">No issues to display</td>
-	</tr>
-	{% endfor %}
-</table>
+<a href="/jira/board">Boards</a>
 {% endblock %}
