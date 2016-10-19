@@ -82,4 +82,16 @@ router.get('/sprint/:sprintId/issue', (req, res, next) => {
 	}).catch(next);
 });
 
+router.get('/issue/history/:issueId', (req, res, next) => {
+	const {issueId} = req.params;
+	jiraService.getIssueHistory(issueId).then(histories => {
+		if (!histories) {
+			console.error(`Unable to get history for issue ${issueId}`);
+			return res.send(500);
+		}
+		console.dir(histories);
+		return res.render('jira/issue-history.html', {histories});
+	}).catch(next);
+});
+
 module.exports = router;

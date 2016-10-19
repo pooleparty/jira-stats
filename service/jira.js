@@ -18,6 +18,9 @@ const client = opts => {
 	reqOpts.url = url + opts.url;
 	reqOpts.json = true;
 	_.set(reqOpts, 'headers.Authorization', `Basic ${process.env.BASIC_AUTH}`);
+
+	console.dir(`JIRA Client requesting ${JSON.stringify(reqOpts)}`);
+
 	return request(reqOpts)
 		.then(response => {
 			console.log(`JIRA responded with status ${response.statusCode}`);
@@ -45,7 +48,7 @@ const client = opts => {
 lib.getAllBoards = () => {
 	console.log('getting all boards');
 	return client({
-		url: 'rest/agile/1.0/board?limit=200'
+		url: 'rest/agile/1.0/board?startAt=50'
 	});
 };
 
@@ -62,5 +65,12 @@ lib.getIssuesForSprint = (sprintId) => {
 		url: `rest/agile/1.0/sprint/${sprintId}/issue`
 	});
 };
+
+lib.getIssueHistory = (issueId) => {
+	console.log(`getting history for issue ${issueId}`);
+	return client({
+		url: `rest/api/latest/issue/${issueId}?expand=changelog`
+	}).then(issue => issue.changelog.histories);
+}
 
 module.exports = lib;
