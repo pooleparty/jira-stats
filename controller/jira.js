@@ -8,41 +8,39 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/board', (req, res, next) => {
-	jiraService.getAllBoards().then(data => {
-		if (!data) {
+	jiraService.getAllBoards().then(boards => {
+		if (!boards) {
 			console.error('Unable to get all boards');
 			return res.send(500);
 		}
-		console.dir(data);
-		return res.render('jira/board.html', {boards: data.values});
+		console.dir(boards);
+		return res.render('jira/board.html', {boards});
 	}).catch(next);
 });
 
 router.get('/board/:boardId', (req, res, next) => {
 	const {boardId} = req.params;
-	jiraService.getSprintsForBoard(boardId).then(data => {
-		if (!data) {
+	jiraService.getSprintsForBoard(boardId).then(sprints => {
+		if (!sprints) {
 			console.error(`Unable to get sprint for board ${boardId}`);
 			return res.send(500);
 		}
-		console.dir(data);
-		return res.render('jira/sprint.html', {sprints: data.values});
+		console.dir(sprints);
+		return res.render('jira/sprint.html', {sprints});
 	}).catch(next);
 });
 
 router.get('/sprint/:sprintId/issue', (req, res, next) => {
 	const {sprintId} = req.params;
-	jiraService.getIssuesForSprint(sprintId).then(data => {
-		if (!data) {
+	jiraService.getIssuesForSprint(sprintId).then(issues => {
+		if (!issues) {
 			console.error(`Unable to get issues for sprint ${sprintId}`);
 			return res.send(500);
 		}
 
-		let filtered = _.filter(data.issues, (value) => {
-			return _.get(value, 'fields.issuetype.subtask') != true;
-		});
+		let filtered = _.filter(issues, value => _.get(value, 'fields.issuetype.subtask') != true);
 
-		let issueStatuses = _.map(filtered, (value, index, collection) => {
+		let issueStatuses = _.map(filtered, value => {
 			return {
 				key: value.key,
 				estimate: _.get(value, 'fields.customfield_11310'),

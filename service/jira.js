@@ -48,22 +48,22 @@ const client = opts => {
 lib.getAllBoards = () => {
 	console.log('getting all boards');
 	return client({
-		url: 'rest/agile/1.0/board?startAt=50'
-	});
+		url: 'rest/agile/1.0/board?startAt=0'
+	}).then(data => data.values);
 };
 
 lib.getSprintsForBoard = (boardId) => {
 	console.log(`getting boards ${boardId}`);
 	return client({
 		url: `rest/agile/1.0/board/${boardId}/sprint`
-	});
+	}).then(data => data.values);
 };
 
 lib.getIssuesForSprint = (sprintId) => {
 	console.log(`getting issues for sprint ${sprintId}`);
 	return client({
 		url: `rest/agile/1.0/sprint/${sprintId}/issue`
-	});
+	}).then(data => data.issues);
 };
 
 lib.getIssueHistory = (issueId) => {

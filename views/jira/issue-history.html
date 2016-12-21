@@ -1,0 +1,16 @@
+{% extends "jira/decorator.html" %}
+
+{% block body %}
+<h1>Issue History</h1>
+<h2>Found {{histories.length}} changelog items</h2>
+{% for history in histories %}
+<p>{{history.created}}</p>
+{% for item in history.items %}
+<ul>
+<li><strong>{{item.field}}</strong></li>
+<li>{{item.fromString}}</li>
+<li>{{item.toString}}</li>
+</ul>
+{% endfor %}
+{% endfor %}
+{% endblock %}
