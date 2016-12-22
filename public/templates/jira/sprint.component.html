@@ -1,0 +1,8 @@
+<div>
+	<h2>Sprint Component</h2>
+	<div *ngFor="let issue of issues">
+		<!--<pre>{{issue | json}}</pre>-->
+		<a [routerLink]="['/issue',issue.key]">{{issue.key}}</a>
+		<div>{{issue.statusCategory}} - {{issue.status}}</div>
+	</div>
+</div>

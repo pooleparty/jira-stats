@@ -1,0 +1,15 @@
+<div>
+	<h2>Boards</h2>
+	<div *ngFor="let board of boards">
+		<md-card>
+			<md-card-subtitle>{{board.type}}</md-card-subtitle>
+			<md-card-title>{{board.name}}</md-card-title>
+			<md-card-content>
+				<pre>{{board | json}}</pre>
+			</md-card-content>
+			<md-card-actions>
+				<a mdButton [routerLink]="['/board', board.id]">{{board.name}}</a>
+			</md-card-actions>
+		</md-card>
+	</div>
+</div>

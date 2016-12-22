@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<base href="/app">
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>JIRA Stats</title>
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="@angular/material/core/theming/prebuilt/indigo-pink.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Polyfill(s) for older browsers -->
+	<script src="core-js/client/shim.min.js"></script>
+
+	<script src="zone.js/dist/zone.js"></script>
+	<script src="reflect-metadata/Reflect.js"></script>
+	<script src="systemjs/dist/system.src.js"></script>
+
+	<script src="js/systemjs.config.js"></script>
+	<script>
+		System.import('app').catch(function(err){ console.error(err); });
+	</script>
 </head>
 <body>
 	<h1>JIRA stats</h1>
-	<a href="/boards"></a>
+	<jira-stats></jira-stats>
 </body>
 </html>

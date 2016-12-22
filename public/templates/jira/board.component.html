@@ -1,0 +1,9 @@
+<div>
+	<h2>Board Components</h2>
+	<div *ngFor="let sprint of sprints">
+		<!--<pre>{{sprint | json}}</pre>-->
+		<a [routerLink]="['/sprint', sprint.id]">{{sprint.name}}</a>
+		<div>{{sprint.startDate}} - {{sprint.endDate}}</div>
+		<div>{{sprint.state}}</div>
+	</div>
+</div>

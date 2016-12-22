@@ -13,7 +13,7 @@ var headers = {
 };
 
 const client = opts => {
-	const {url} = CONFIG.service.jira
+	const {url} = CONFIG.service.jira;
 	const reqOpts = _.assign({}, opts);
 	reqOpts.url = url + opts.url;
 	reqOpts.json = true;
@@ -48,7 +48,7 @@ const client = opts => {
 lib.getAllBoards = () => {
 	console.log('getting all boards');
 	return client({
-		url: 'rest/agile/1.0/board?startAt=50'
+		url: 'rest/agile/1.0/board?startAt=0'
 	});
 };
 
@@ -63,6 +63,13 @@ lib.getIssuesForSprint = (sprintId) => {
 	console.log(`getting issues for sprint ${sprintId}`);
 	return client({
 		url: `rest/agile/1.0/sprint/${sprintId}/issue`
+	});
+};
+
+lib.getIssue = (issueId) => {
+	console.log(`getting issue ${issueId}`);
+	return client({
+		url: `rest/api/latest/issue/${issueId}`
 	});
 };
 
